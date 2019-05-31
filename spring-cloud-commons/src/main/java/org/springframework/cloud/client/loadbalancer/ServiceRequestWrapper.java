@@ -24,11 +24,18 @@ import org.springframework.http.client.support.HttpRequestWrapper;
 
 /**
  * @author Ryan Baxter
+ * 		HttpRequestWrapper 就是一个 HttpRequest 的普通包装类  所有逻辑会委托到内部的 request 对象
  */
 public class ServiceRequestWrapper extends HttpRequestWrapper {
 
+	/**
+	 * 服务实例对象
+	 */
 	private final ServiceInstance instance;
 
+	/**
+	 * 均衡负载对象
+	 */
 	private final LoadBalancerClient loadBalancer;
 
 	public ServiceRequestWrapper(HttpRequest request, ServiceInstance instance,
@@ -38,6 +45,10 @@ public class ServiceRequestWrapper extends HttpRequestWrapper {
 		this.loadBalancer = loadBalancer;
 	}
 
+	/**
+	 * 这里重写了 getUrl 方法 将服务名 通过均衡负载对象 替换成了  ip:port 的格式
+	 * @return
+	 */
 	@Override
 	public URI getURI() {
 		URI uri = this.loadBalancer.reconstructURI(this.instance, getRequest().getURI());

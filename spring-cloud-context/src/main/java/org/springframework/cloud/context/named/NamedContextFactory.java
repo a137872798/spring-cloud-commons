@@ -141,8 +141,17 @@ public abstract class NamedContextFactory<C extends NamedContextFactory.Specific
 		return this.getClass().getSimpleName() + "-" + name;
 	}
 
+	/**
+	 * 通过服务名 获取到对应的 实例对象
+	 * @param name 服务名 也就对应到 serverInstance 的 serverId 属性
+	 * @param type 实例类型
+	 * @param <T>
+	 * @return
+	 */
 	public <T> T getInstance(String name, Class<T> type) {
+		//找到 服务名对应的 上下文信息对象
 		AnnotationConfigApplicationContext context = getContext(name);
+		//判断从beanFactory中能否找到对应的bean 对象 能找到就返回
 		if (BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context,
 				type).length > 0) {
 			return context.getBean(type);

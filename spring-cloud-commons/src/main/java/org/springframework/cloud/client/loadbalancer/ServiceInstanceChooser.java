@@ -23,6 +23,8 @@ import org.springframework.cloud.client.ServiceInstance;
  * to.
  *
  * @author Ryan Baxter
+ *
+ * 		该接口是 均衡负载接口的 父级接口 可以从给定的服务列表中 选择合适的服务
  */
 public interface ServiceInstanceChooser {
 
@@ -30,6 +32,7 @@ public interface ServiceInstanceChooser {
 	 * Chooses a ServiceInstance from the LoadBalancer for the specified service.
 	 * @param serviceId The service ID to look up the LoadBalancer.
 	 * @return A ServiceInstance that matches the serviceId.
+	 * 		这里 服务id 代表的是一个 服务名
 	 */
 	ServiceInstance choose(String serviceId);
 

@@ -25,6 +25,7 @@ import org.springframework.cloud.client.ServiceInstance;
  * Represents a client-side load balancer.
  *
  * @author Spencer Gibb
+ * 		该接口是用来定义均衡负载的接口
  */
 public interface LoadBalancerClient extends ServiceInstanceChooser {
 
@@ -38,6 +39,9 @@ public interface LoadBalancerClient extends ServiceInstanceChooser {
 	 * @throws IOException in case of IO issues.
 	 * @return The result of the LoadBalancerRequest callback on the selected
 	 * ServiceInstance.
+	 *
+	 * 	通过服务id 和均衡负载的请求对象 执行对应的逻辑  传入的 request 是一个函数式接口
+	 * 	传入 serviceId 从列表中找到对应的实例 之后执行 request(也就是他对应的函数)
 	 */
 	<T> T execute(String serviceId, LoadBalancerRequest<T> request) throws IOException;
 
@@ -52,6 +56,7 @@ public interface LoadBalancerClient extends ServiceInstanceChooser {
 	 * @throws IOException in case of IO issues.
 	 * @return The result of the LoadBalancerRequest callback on the selected
 	 * ServiceInstance.
+	 * 		通过服务id 和服务实例 以及请求对象 执行对应逻辑
 	 */
 	<T> T execute(String serviceId, ServiceInstance serviceInstance,
 			LoadBalancerRequest<T> request) throws IOException;
@@ -64,6 +69,7 @@ public interface LoadBalancerClient extends ServiceInstanceChooser {
 	 * @param instance service instance to reconstruct the URI
 	 * @param original A URI with the host as a logical service name.
 	 * @return A reconstructed URI.
+	 * 		通过 服务实例 以及请求对象 构建一个新的url 我们可能会使用服务名 作为 url 这里会被替换成 ip:port 的形式
 	 */
 	URI reconstructURI(ServiceInstance instance, URI original);
 

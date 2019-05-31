@@ -24,6 +24,8 @@ import java.util.Map;
  *
  * @author Spencer Gibb
  * @author Tim Ysewyn
+ *
+ * 		cloud 层面的
  */
 public interface ServiceInstance {
 
@@ -36,31 +38,37 @@ public interface ServiceInstance {
 
 	/**
 	 * @return The service ID as registered.
+	 * 		每个服务实例有自己的id
 	 */
 	String getServiceId();
 
 	/**
 	 * @return The hostname of the registered service instance.
+	 *		获取服务实例主机名
 	 */
 	String getHost();
 
 	/**
 	 * @return The port of the registered service instance.
+	 * 		获取端口号
 	 */
 	int getPort();
 
 	/**
 	 * @return Whether the port of the registered service instance uses HTTPS.
+	 * 		是否使用了 https
 	 */
 	boolean isSecure();
 
 	/**
 	 * @return The service URI address.
+	 * 		获取url信息
 	 */
 	URI getUri();
 
 	/**
 	 * @return The key / value pair metadata associated with the service instance.
+	 * 		获取该服务的元数据信息  以 KV 形式保存
 	 */
 	Map<String, String> getMetadata();
 

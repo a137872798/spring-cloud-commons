@@ -28,7 +28,7 @@ import org.springframework.http.client.ClientHttpResponse;
  * to the intercepted {@link HttpRequest}.
  *
  * @author William Tran
- *
+ *		能够构建 LoadBalancerRequest 对象并 给 均衡负载拦截器使用
  */
 public class LoadBalancerRequestFactory {
 
@@ -46,6 +46,13 @@ public class LoadBalancerRequestFactory {
 		this.loadBalancer = loadBalancer;
 	}
 
+	/**
+	 * 将传入的 普通Request 变成 能进行均衡负载的 request 对象
+	 * @param request
+	 * @param body
+	 * @param execution
+	 * @return
+	 */
 	public LoadBalancerRequest<ClientHttpResponse> createRequest(
 			final HttpRequest request, final byte[] body,
 			final ClientHttpRequestExecution execution) {
@@ -53,6 +60,7 @@ public class LoadBalancerRequestFactory {
 			HttpRequest serviceRequest = new ServiceRequestWrapper(request, instance,
 					this.loadBalancer);
 			if (this.transformers != null) {
+				//如果存在转换器 对每个请求做转换
 				for (LoadBalancerRequestTransformer transformer : this.transformers) {
 					serviceRequest = transformer.transformRequest(serviceRequest,
 							instance);
